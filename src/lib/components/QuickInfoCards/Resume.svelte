@@ -1,4 +1,6 @@
-<p class="text-gray-800 text-lg font-bold tracking-tight">Work Experience</p>
+<p class="text-gray-800 text-lg font-bold tracking-tight my-2 mb-4">
+    Work Experience
+</p>
 <ul class="list-disc ml-8">
     <li class="text-gray-500">
         <span class="font-semibold">Apple</span> - swe intern at Apple working on

@@ -1,5 +1,5 @@
 <script>
-    import Intros from "$lib/components/CardSlider.svelte";
+    import Intros from "$lib/components/QuickInfoCards/CardSlider.svelte";
     import Introduction from "$lib/components/Introduction.svelte";
     import { fly } from "svelte/transition";
 </script>

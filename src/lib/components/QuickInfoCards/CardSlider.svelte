@@ -1,10 +1,9 @@
 <script>
     // @ts-nocheck
-
-    import Card from "$lib/components/Card.svelte";
-    import Projects from "./IntroCards/Projects.svelte";
-    import Blogs from "./IntroCards/Blogs.svelte";
-    import Resume from "./IntroCards/Resume.svelte";
+    import CardWrapper from "./CardWrapper.svelte";
+    import Projects from "./Projects.svelte";
+    import Blog from "./Blog.svelte";
+    import Resume from "./Resume.svelte";
     import { fade } from "svelte/transition";
 
     let introIndex = 0;
@@ -15,11 +14,11 @@
         },
         {
             component: Resume,
-            link: "/projects",
+            link: "/resume",
         },
         {
-            component: Blogs,
-            link: "/projects",
+            component: Blog,
+            link: "/blog",
         },
     ];
 
@@ -36,12 +35,12 @@
     }
 </script>
 
-<div class="flex my-24 gap-2 px-4 mx-auto w-fit md:gap-5 h-44">
+<div class="flex my-10 md:my-24 gap-2 px-4 mx-auto w-fit md:gap-5 h-44">
     <button
         on:click={() => {
             move(-1);
         }}
-        class="hover:scale-125 active:scale-90 duration-150 ease-in"
+        class="md:hover:scale-125 active:scale-90 duration-150 ease-in"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -66,19 +65,23 @@
     <div>
         {#each introductions as intro, i}
             {#if i === introIndex}
-                <div transition:fade class="m-0 h-0">
+                <div
+                    in:fade={{ duration: 400, delay: 300 }}
+                    out:fade={{ duration: 200 }}
+                    class="m-0 h-0"
+                >
                     <a href={intro.link}>
-                        <Card>
+                        <CardWrapper>
                             <svelte:component this={intro.component}
                             ></svelte:component>
-                        </Card>
+                        </CardWrapper>
                     </a>
                 </div>
             {/if}
         {/each}
     </div>
     <button
-        class="hover:scale-125 active:scale-90 duration-150 ease-in"
+        class="md:hover:scale-125 active:scale-90 duration-150 ease-in"
         on:click={() => {
             move(1);
         }}
