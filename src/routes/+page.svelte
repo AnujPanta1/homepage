@@ -3,7 +3,7 @@
     let phraseIndex = 0;
     let phrases = [
         "i'm a cs student at uc berkeley",
-        "i've worked @ apple & w/ uc berkeley law",
+        "i've worked @ apple & uc berkeley law",
         "i love to make websites",
         "please check out more :-)",
     ];
@@ -22,7 +22,7 @@
                 <p
                     class="text-4xl font-semibold h-0 m-0"
                     in:fly={{ y: 50, duration: 500, delay: 500 }}
-                    out:fade={{ duration: 500 }}
+                    out:fade={{ duration: 1000 }}
                 >
                     {phrase}
                 </p>

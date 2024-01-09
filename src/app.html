@@ -9,6 +9,9 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
 		rel="stylesheet"> %sveltekit.head%
+
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+
 	<style>
 		body {
 			font-family: 'Inter', sans-serif;
@@ -18,6 +21,354 @@
 
 <body data-sveltekit-preload-data="hover">
 	<div style="display: contents">%sveltekit.body%</div>
+	<script>
+		// const palette = ["#F4B6C4AA", "#DC7F92AA", "#6476BDAA", "#70BCD6AA", "#D1C2EBAA"];
+		const palette = ["#E5E5E5", "#F3F3F3", "#FFB0C7", "#FFC7FF"];
+
+		class Blob {
+			constructor(x, y, rMAX, color) {
+				this.x = x;
+				this.y = y;
+				this.zoff = random(1.0);
+				this.rMAX = rMAX;
+				this.rotation = random(-360, 360);
+				this.color = color;
+				this.expanding = false;
+				this.moving = false;
+			}
+
+			expand() {
+				this.expanding = true;
+			}
+
+			move() {
+				this.moving = true;
+			}
+
+			display() {
+				push();
+				noStroke();
+
+				if (this.expanding && this.rMAX < width / 2) {
+					this.rMAX += random(3, 10);
+				}
+
+				// if (this.moving || dist(this.x, this.y, mouseX, mouseY) < this.rMAX / 3) {
+				if (this.moving) {
+					this.zoff += frameRate() / 10000;
+				}
+
+				translate(this.x, this.y);
+				rotate(this.rotation);
+
+				let gradientFill = drawingContext.createRadialGradient(
+					0, 0, this.rMAX * 0.1,
+					0, 0, this.rMAX * 0.69
+				);
+
+				gradientFill.addColorStop(0, this.color);
+				gradientFill.addColorStop(1, color(255, 255, 255, 0));
+				drawingContext.fillStyle = gradientFill;
+
+				beginShape();
+				for (let t = 0; t < 360; t++) {
+					let noiseMax = 0.75;
+					let xoff = map(cos(t), -1, 1, 0, noiseMax);
+					let yoff = map(sin(t), -1, 1, 0, noiseMax);
+					let n = noise(xoff, yoff, this.zoff);
+					let r = map(n, 0, 1, 0, this.rMAX);
+					let x = r * cos(t);
+					let y = r * sin(t);
+					vertex(x, y);
+				}
+				endShape(CLOSE);
+				pop();
+			}
+		}
+
+		class Fish {
+			constructor(segNum, segLength, thickness, taperRate, speedFactor) {
+				this.position = createVector(random(width), random(height));
+				this.velocity = createVector(random(-speedFactor, speedFactor), random(-speedFactor, speedFactor))
+				this.acceleration = createVector();
+				this.maxspeed = speedFactor;
+				this.maxforce = 0.3;
+
+				this.segNum = segNum;
+				this.segLength = segLength;
+				this.thickness = thickness;
+				this.taperRate = taperRate;
+
+				this.speedFactor = speedFactor;
+				this.x = [];
+				this.y = [];
+				for (let i = 0; i < segNum; i++) {
+					this.x[i] = 0;
+					this.y[i] = 0;
+				}
+				const palette = ["#F4B6C4", "#DC7F92", "#6476BD", "#70BCD6", "#D1C2EB", "#fcd34d"];
+
+				this.fishC = random(palette)
+				this.fishC = hexToRgb(this.fishC);
+			}
+
+			run(fishes) {
+				this.flock(fishes);
+				this.update();
+				this.borders();
+				this.updateSegment(this.position.x, this.position.y);
+			}
+
+			updateSegment(targetX, targetY) {
+				this.dragSegment(0, targetX, targetY);
+				for (let i = 0; i < this.segNum - 1; i++) {
+					this.dragSegment(i + 1, this.x[i], this.y[i]);
+				}
+			}
+
+			dragSegment(i, xin, yin) {
+				let dx = (xin - this.x[i]) * this.speedFactor;
+				let dy = (yin - this.y[i]) * this.speedFactor;
+				let angle = atan2(dy, dx);
+				this.x[i] = xin - cos(angle) * this.segLength;
+				this.y[i] = yin - sin(angle) * this.segLength;
+				this.segment(this.x[i], this.y[i], angle, i);
+			}
+
+			segment(x, y, a, index) {
+				push();
+				translate(x, y);
+				rotate(a);
+				let temp = map(index, 0, this.segNum, 200, 10)
+				stroke(this.fishC[0], this.fishC[1], this.fishC[2], temp);
+				strokeWeight(this.thickness * pow(this.taperRate, index));
+				line(0, 0, this.segLength, 0);
+				pop();
+			}
+
+			handleWrapAround(newPosition) {
+				for (let i = 0; i < this.segNum; i++) {
+					this.x[i] = newPosition.x;
+					this.y[i] = newPosition.y;
+				}
+			}
+
+			applyForce(force) {
+				this.acceleration.add(force);
+			}
+
+			flock(fishes) {
+				let sep = this.separate(fishes);
+				let ali = this.align(fishes);
+				let coh = this.cohesion(fishes);
+
+				sep.mult(1.7);
+				ali.mult(1.0);
+				coh.mult(1.0);
+
+				this.applyForce(sep);
+				this.applyForce(ali);
+				this.applyForce(coh);
+			}
+
+			update() {
+
+				this.velocity.add(this.acceleration);
+				this.velocity.limit(this.maxspeed);
+				this.position.add(this.velocity);
+				this.acceleration.mult(0);
+			}
+
+			seek(target) {
+				let desired = p5.Vector.sub(target, this.position);
+
+				desired.normalize();
+				desired.mult(this.maxspeed);
+
+				let steer = p5.Vector.sub(desired, this.velocity);
+				steer.limit(this.maxforce);
+				return steer;
+			}
+
+			borders() {
+				let wrapped = false;
+				let totalLength = this.segLength * this.segNum;
+
+				if (this.position.x < -totalLength) {
+					this.position.x = width + totalLength;
+					wrapped = true;
+				}
+				if (this.position.y < -totalLength) {
+					this.position.y = height + totalLength;
+					wrapped = true;
+				}
+				if (this.position.x > width + totalLength) {
+					this.position.x = -totalLength;
+					wrapped = true;
+				}
+				if (this.position.y > height + totalLength) {
+					this.position.y = -totalLength;
+					wrapped = true;
+				}
+
+				if (wrapped) {
+					this.handleWrapAround(this.position);
+				}
+			}
+
+
+			separate(fishes) {
+				let desiredseparation = 25.0;
+				let steer = createVector(0, 0, 0)
+				let count = 0;
+				for (let other of fishes) {
+					let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
+					if ((d > 0) && (d < desiredseparation)) {
+						let diff = p5.Vector.sub(this.position, other.position);
+						diff.normalize();
+						diff.div(d);
+						steer.add(diff);
+						count++;
+					}
+				}
+				if (count > 0) {
+					steer.div(count);
+				}
+
+				if (steer.mag() > 0) {
+					// Implement Reynolds: Steering = Desired - Velocity
+					steer.normalize();
+					steer.mult(this.maxspeed);
+					steer.sub(this.velocity);
+					steer.limit(this.maxforce);
+				}
+				return steer;
+			}
+
+			align(fishes) {
+				let neighbordist = 50;
+				let sum = createVector();
+				let count = 0;
+				for (let other of fishes) {
+					let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
+					if ((d > 0) && (d < neighbordist)) {
+						sum.add(other.velocity);
+						count++;
+					}
+				}
+				if (count > 0) {
+					sum.div(count);
+					sum.normalize();
+					sum.mult(this.maxspeed);
+					let steer = p5.Vector.sub(sum, this.velocity);
+					steer.limit(this.maxforce);
+					return steer;
+				} else {
+					return createVector();
+				}
+			}
+
+			cohesion(fishes) {
+				let neighbordist = 50;
+				let sum = createVector();
+				let count = 0;
+				for (let other of fishes) {
+					let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
+					if ((d > 0) && (d < neighbordist)) {
+						sum.add(other.position);
+						count++;
+					}
+				}
+				if (count > 0) {
+					sum.div(count);
+					return this.seek(sum);
+				} else {
+					return createVector();
+				}
+			}
+		}
+
+		let backgroundBlobs = [];
+		let special = [];
+		let school = [];
+		let canvas;
+
+		function generateBasicBlob(size = 0.1) {
+			let ox = random(width);
+			let oy = random(height);
+			let rMAX = min(width, height) * size * random(2, 5);
+			let color = random(palette);
+			let b = new Blob(ox, oy, rMAX, color);
+			if (random(1) < 0.5) {
+				b.move()
+			}
+			return b;
+		}
+
+		function windowResized() {
+			resizeCanvas(windowWidth, windowHeight);
+		}
+
+		function setup() {
+			canvas = createCanvas(windowWidth, windowHeight);
+			canvas.position(0, 0);
+			canvas.style('z-index', '-1');
+
+			angleMode(DEGREES);
+			frameRate(30);
+			for (let i = 0; i < 10; i++) {
+				backgroundBlobs.push(generateBasicBlob(0.5))
+			}
+			for (let i = 0; i < 10; i++) {
+				backgroundBlobs.push(generateBasicBlob())
+			}
+			for (let i = 0; i < 10; i++) {
+				special.push(generateBasicBlob())
+			}
+
+			for (let i = 0; i < map(windowWidth, 0, 1000, 30, 80); i++) {
+				school.push(birthFish(random(width), random(height)));
+			}
+
+		}
+
+		function hexToRgb(hex) {
+			// Remove the '#' symbol if present
+			hex = hex.replace('#', '');
+
+			// Extract the red (R), green (G), and blue (B) components
+			const r = parseInt(hex.substring(0, 2), 16);
+			const g = parseInt(hex.substring(2, 4), 16);
+			const b = parseInt(hex.substring(4, 6), 16);
+
+			// Return an array with the RGB values
+			return [r, g, b];
+		}
+
+		function draw() {
+			background("#fff");
+			drawingContext.filter = 'blur(3px)';
+			for (let b of backgroundBlobs) {
+				b.display()
+			}
+			for (let f of school) {
+				f.run(school);
+			}
+			for (let b of special) {
+				b.display()
+			}
+		}
+
+		function birthFish() {
+			let numberOfSegments = floor(random(40, 70)); // More reasonable segment range
+			let segmentLength = 3; // Longer segments for more realistic fish
+			let segmentSpeed = random(4, 6); // Slower fish for more natural movement
+			let thickness = random(10, 20); // Adjust thickness for variety
+			let taperRate = random(0.96, 0.99); // Varied taper rate for different fish shapes
+			let newFish = new Fish(numberOfSegments, segmentLength, thickness, taperRate, segmentSpeed);
+			return newFish;
+		}
+	</script>
 </body>
 
 </html>
