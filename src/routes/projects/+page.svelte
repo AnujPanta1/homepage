@@ -4,7 +4,7 @@
 
 <div in:fly={{ y: 50, duration: 500, delay: 500 }} class="h-0 m-0">
     <div
-        class="w-8/12 bg-white border shadow-sm rounded-xl py-3 bg-white/90 mx-auto my-10"
+        class="w-8/12 bg-white border shadow-sm rounded-xl py-3 bg-white/90 mx-auto my-10 max-h-[90vh] overflow-y-scroll"
     >
         <div
             class="flex w-full justify-between items-center border-b px-4 py-2"
@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <div class="py-3 mb-3">
+            <div class="py-3 border-b mb-3">
                 <p class="text-xs font-semibold uppercase text-gray-600">
                     Animations
                 </p>
@@ -138,7 +138,7 @@
                 </div>
             </div>
 
-            <div class="py-3 mb-3">
+            <div class="py-3 border-b mb-3">
                 <p class="text-xs font-semibold uppercase text-gray-600">
                     Others
                 </p>
@@ -157,5 +157,16 @@
                 </div>
             </div>
         </div>
+        <div class="px-4 mb-2">
+            <p class="text-sm mx-auto font-semibold text-gray-600 w-fit">
+                Gheck out my saucy github !
+            </p>
+        </div>
     </div>
 </div>
+
+<style>
+    p {
+        width: fit-content;
+    }
+</style>

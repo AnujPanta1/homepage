@@ -2,9 +2,9 @@
     // @ts-nocheck
 
     import Card from "$lib/components/Card.svelte";
-    import Projects from "./Projects.svelte";
-    import Resume from "./Resume.svelte";
-    import Blogs from "./Blogs.svelte";
+    import Projects from "./IntroCards/Projects.svelte";
+    import Blogs from "./IntroCards/Blogs.svelte";
+    import Resume from "./IntroCards/Resume.svelte";
     import { fade } from "svelte/transition";
 
     let introIndex = 0;

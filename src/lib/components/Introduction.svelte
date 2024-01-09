@@ -10,7 +10,7 @@
 
     setInterval(() => {
         phraseIndex = phraseIndex + 1 === phrases.length ? 0 : phraseIndex + 1;
-    }, 6000);
+    }, 5000);
 </script>
 
 <p class="text-lg md:text-3xl font-normal">hi, welcome to my site i'm</p>
@@ -20,8 +20,8 @@
         {#if i === phraseIndex}
             <p
                 class="text-xl md:text-4xl font-semibold"
-                in:fly={{ y: 50, duration: 500, delay: 900 }}
-                out:fade={{ duration: 1000 }}
+                in:fly={{ y: 50, duration: 500, delay: 500 }}
+                out:fade={{ duration: 300 }}
             >
                 {phrase}
             </p>
