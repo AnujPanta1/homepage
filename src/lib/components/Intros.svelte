@@ -5,19 +5,32 @@
     import Projects from "./Projects.svelte";
     import Resume from "./Resume.svelte";
     import Blogs from "./Blogs.svelte";
-    import { fade, fly } from "svelte/transition";
+    import { fade } from "svelte/transition";
 
     let introIndex = 0;
-    let intros = [Projects, Resume, Blogs];
+    let introductions = [
+        {
+            component: Projects,
+            link: "/projects",
+        },
+        {
+            component: Resume,
+            link: "/projects",
+        },
+        {
+            component: Blogs,
+            link: "/projects",
+        },
+    ];
 
     function move(n) {
         introIndex += n;
 
         if (introIndex < 0) {
-            introIndex = intros.length - 1;
+            introIndex = introductions.length - 1;
         }
 
-        if (introIndex > intros.length - 1) {
+        if (introIndex > introductions.length - 1) {
             introIndex = 0;
         }
     }
@@ -28,7 +41,7 @@
         on:click={() => {
             move(-1);
         }}
-        class="hover:scale-110 active:scale-90 duration-150 ease-in"
+        class="hover:scale-125 active:scale-90 duration-150 ease-in"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,18 +64,21 @@
         </svg>
     </button>
     <div>
-        {#each intros as intro, i}
+        {#each introductions as intro, i}
             {#if i === introIndex}
                 <div transition:fade class="m-0 h-0">
-                    <Card>
-                        <svelte:component this={intro}></svelte:component>
-                    </Card>
+                    <a href={intro.link}>
+                        <Card>
+                            <svelte:component this={intro.component}
+                            ></svelte:component>
+                        </Card>
+                    </a>
                 </div>
             {/if}
         {/each}
     </div>
     <button
-        class="hover:scale-110 active:scale-90 duration-150 ease-in"
+        class="hover:scale-125 active:scale-90 duration-150 ease-in"
         on:click={() => {
             move(1);
         }}
