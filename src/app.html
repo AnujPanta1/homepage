@@ -22,6 +22,8 @@
 <body data-sveltekit-preload-data="hover">
 	<div style="display: contents">%sveltekit.body%</div>
 	<script>
+
+		var isChromium = !!window.chrome
 		// const palette = ["#F4B6C4AA", "#DC7F92AA", "#6476BDAA", "#70BCD6AA", "#D1C2EBAA"];
 		const palette = ["#E5E5E5", "#F3F3F3", "#FFB0C7", "#FFC7FF"];
 
@@ -310,26 +312,34 @@
 		}
 
 		function setup() {
-			canvas = createCanvas(windowWidth, windowHeight);
-			canvas.position(0, 0);
-			canvas.style('z-index', '-1');
 
-			angleMode(DEGREES);
-			frameRate(30);
-			for (let i = 0; i < 10; i++) {
-				backgroundBlobs.push(generateBasicBlob(0.5))
-			}
-			for (let i = 0; i < 10; i++) {
-				backgroundBlobs.push(generateBasicBlob())
-			}
-			for (let i = 0; i < 10; i++) {
-				special.push(generateBasicBlob())
-			}
+			if (isChromium) {
+				console.log("nah chrome")
+				console.log("exiting")
+				noLoop();
+			} else {
 
-			for (let i = 0; i < map(windowWidth, 0, 1000, 30, 80); i++) {
-				school.push(birthFish(random(width), random(height)));
-			}
+				canvas = createCanvas(windowWidth, windowHeight);
+				canvas.position(0, 0);
+				canvas.style('z-index', '-1');
 
+				angleMode(DEGREES);
+				frameRate(30);
+				for (let i = 0; i < 5; i++) {
+					backgroundBlobs.push(generateBasicBlob(0.5))
+				}
+				for (let i = 0; i < 5; i++) {
+					backgroundBlobs.push(generateBasicBlob())
+				}
+				for (let i = 0; i < 5; i++) {
+					special.push(generateBasicBlob())
+				}
+				special.push(new Blob(width / 2, height / 3, width / 2, palette[1]))
+
+				for (let i = 0; i < map(windowWidth, 0, 1000, 20, 40); i++) {
+					school.push(birthFish(random(width), random(height)));
+				}
+			}
 		}
 
 		function hexToRgb(hex) {
