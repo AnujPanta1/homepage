@@ -1,5 +1,5 @@
 <p class="text-gray-800 text-lg font-bold tracking-tight my-2 mb-4">
-    Read my blogs about tech and product ideas !
+    <span class="text-purple-600">Blogs</span>
 </p>
 <ul class="list-disc ml-8">
     <li class="text-gray-500">

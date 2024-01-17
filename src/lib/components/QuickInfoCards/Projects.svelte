@@ -1,5 +1,5 @@
 <p class="text-gray-800 text-lg font-bold tracking-tight my-2 mb-4">
-    Check out some of my projects
+    <span class="text-blue-600">Projects</span>
 </p>
 <ul class="list-disc ml-8">
     <li class="text-gray-500">

@@ -5,7 +5,7 @@
 </script>
 
 <div in:fly={{ y: 50, duration: 500, delay: 500 }} class="h-0 m-0">
-    <LargeWrapper title="Projects">
+    <LargeWrapper title="Projects" color="text-blue-600">
         <div class="px-4 py-2">
             <Section title="Websites">
                 <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
@@ -71,7 +71,7 @@
                         <p class="text-gray-600 my-2">
                             After reading a paper on Physarum slime written by
                             Jeff Jones I decided to make a moving Agent
-                            simulation drawing on charactersisits as written in
+                            simulation drawing on characteristics as written in
                             the paper. The Agents move fully autonomously, like
                             Physarum, around their environment moving based on
                             the trail of other Agents.

@@ -1,13 +1,18 @@
 <script lang="ts">
     export let title: string;
     export let linkLocation = "/";
+    export let color: string;
 </script>
 
 <div
     class="w-10/12 md:my-14 bg-white border shadow-sm rounded-xl py-3 bg-white/90 mx-auto h-[85vh] mt-5 overflow-y-scroll"
 >
     <div class="flex w-full justify-between items-center border-b px-4 pb-2">
-        <p class="font-semibold text-lg">{title}</p>
+        <p class="font-semibold text-lg">
+            <span class={color}>
+                {title}
+            </span>
+        </p>
         <a
             href={linkLocation}
             class="p-1.5 rounded-lg bg-stone-200/50 hover:bg-stone-200/80 duration-300 ease-in active:scale-90"

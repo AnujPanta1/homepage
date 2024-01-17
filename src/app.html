@@ -66,7 +66,6 @@
 					color(229, 229, 229),
 					color(243, 243, 243),
 				];
-
 				colorPalette.background = [
 					color(177, 178, 255),
 					color(170, 196, 255),
@@ -75,7 +74,6 @@
 					color(220, 191, 255),
 					color(229, 212, 255),
 				];
-
 				colorPalette.fish = [
 					color(244, 182, 196),
 					color(220, 127, 146),
@@ -124,7 +122,7 @@
 		}
 
 		function draw() {
-			background("#fff");
+			background(255);
 			drawingContext.filter = 'blur(3px)';
 			for (let b of backgroundLayer) {
 				b.display()
@@ -164,8 +162,9 @@
 				this.noiseMax = random(0.7, 0.9);
 				// states
 				if (random(1) < 0.5)
+					this.morphing = true;
+				else
 					this.morphing = false;
-
 				this.traveling = false;
 				this.target = createVector();
 			}
@@ -227,7 +226,7 @@
 
 		class Fish {
 			constructor(segNum, segLength, thickness, taperRate, speedFactor) {
-				this.position = createVector(width / 2, height / 2);
+				this.position = createVector(width / 2, height / 3);
 				this.velocity = createVector(random(-speedFactor, speedFactor), random(-speedFactor, speedFactor))
 				this.acceleration = createVector();
 				this.maxspeed = speedFactor * 1.5;
