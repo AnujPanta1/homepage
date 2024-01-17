@@ -23,9 +23,135 @@
 	<div style="display: contents">%sveltekit.body%</div>
 	<script>
 
-		var isChromium = !!window.chrome
-		// const palette = ["#F4B6C4AA", "#DC7F92AA", "#6476BDAA", "#70BCD6AA", "#D1C2EBAA"];
-		const palette = ["#E5E5E5", "#F3F3F3", "#FFB0C7", "#FFC7FF"];
+		let isChromium = !!window.chrome;
+		let canvas;
+
+		let colorPalette = {
+			grays: [],
+			background: [],
+			fish: []
+		};
+
+		let backgroundLayer = [];
+		let middelLayer = [];
+		let topLayer = [];
+		let schoolA = [];
+		let schoolB = [];
+
+		let oldWidth;
+		let oldHeight;
+
+		function generateBasicBlob(size = 0.1, colorChoices = colorPalette.grays, x = random(width / 5, width - width / 5), y = random(height / 5, height - height / 5)) {
+			let ox = x;
+			let oy = y;
+			let rMAX = ((width + height) / 2) * size * random(2.5, 2.7);
+			let color = random(colorChoices);
+			let b = new Blob(ox, oy, rMAX, color);
+			return b;
+		}
+
+		function setup() {
+			if (isChromium) {
+				console.log('p5.js cannot run adequetly on Chrome, as the engine has implemented canvas rendering poorly. Safari will let you see the full art piece. iPhones work great as well!');
+				noLoop();
+			} else {
+				canvas = createCanvas(windowWidth, windowHeight);
+				canvas.position(0, 0);
+				canvas.style('z-index', '-1');
+
+				angleMode(DEGREES);
+				frameRate(30);
+
+				colorPalette.grays = [
+					color(229, 229, 229),
+					color(243, 243, 243),
+				];
+
+				colorPalette.background = [
+					color(177, 178, 255),
+					color(170, 196, 255),
+					color(238, 241, 255),
+					color(241, 234, 255),
+					color(220, 191, 255),
+					color(229, 212, 255),
+				];
+
+				colorPalette.fish = [
+					color(244, 182, 196),
+					color(220, 127, 146),
+					color(100, 118, 186),
+					color(209, 194, 235),
+					color(252, 211, 77),
+				]
+
+				// gray background large
+				backgroundLayer.push(generateBasicBlob(1, colorPalette.grays))
+				for (let i = 0; i < 2; i++) {
+					backgroundLayer.push(generateBasicBlob(0.6, colorPalette.grays))
+				}
+
+				// color full large
+				for (let i = 0; i < 5; i++) {
+					backgroundLayer.push(generateBasicBlob(0.35, colorPalette.background))
+				}
+
+				// add to school B - smaller
+				for (let i = 0; i < map(min(windowWidth, windowHeight), 0, 1200, 5, 25); i++) {
+					schoolB.push(birthFish(random(width), random(height)));
+				}
+
+				// add middle layres
+				for (let i = 0; i < 10; i++) {
+					middelLayer.push(generateBasicBlob(0.1, colorPalette.background))
+				}
+
+				// add to school A - larger
+				for (let i = 0; i < map(min(windowWidth, windowHeight), 0, 1200, 10, 60); i++) {
+					schoolA.push(birthFish(random(width), random(height)));
+				}
+
+				// top layre
+				for (let i = 0; i < 5; i++) {
+					topLayer.push(generateBasicBlob(0.15, colorPalette.background))
+				}
+
+				topLayer.push(generateBasicBlob(0.15, [color(255, 252, 241)], width / 2, height / 3))
+
+				oldWidth = width;
+				oldHeight = height;
+
+			}
+		}
+
+		function draw() {
+			background("#fff");
+			drawingContext.filter = 'blur(3px)';
+			for (let b of backgroundLayer) {
+				b.display()
+			}
+			for (let f of schoolB) {
+				f.run(schoolB);
+			}
+			for (let b of middelLayer) {
+				b.display()
+			}
+			for (let f of schoolA) {
+				f.run(schoolA);
+			}
+			for (let b of topLayer) {
+				b.display()
+			}
+		}
+
+		function birthFish() {
+			let numberOfSegments = floor(random(40, 70));
+			let segmentLength = 3;
+			let segmentSpeed = random(4, 6);
+			let thickness = random(10, 20);
+			let taperRate = random(0.96, 0.99);
+			let newFish = new Fish(numberOfSegments, segmentLength, thickness, taperRate, segmentSpeed);
+			return newFish;
+		}
 
 		class Blob {
 			constructor(x, y, rMAX, color) {
@@ -35,28 +161,41 @@
 				this.rMAX = rMAX;
 				this.rotation = random(-360, 360);
 				this.color = color;
-				this.expanding = false;
-				this.moving = false;
+				this.noiseMax = random(0.7, 0.9);
+				// states
+				if (random(1) < 0.5)
+					this.morphing = false;
+
+				this.traveling = false;
+				this.target = createVector();
 			}
 
-			expand() {
-				this.expanding = true;
+			lerpTo(x, y) {
+				this.traveling = true;
+				this.target = createVector(x, y);
 			}
 
-			move() {
-				this.moving = true;
+			morph() {
+				this.morphing = true;
 			}
 
 			display() {
+
+				if (this.traveling) {
+					this.x = lerp(this.x, this.target.x, 0.05);
+					this.y = lerp(this.y, this.target.y, 0.05);
+
+					if (dist(this.x, this.y, this.target.x, this.target.y) < 2) {
+						this.traveling = false;
+						this.target = createVector();
+					}
+				}
+
+
 				push();
 				noStroke();
 
-				if (this.expanding && this.rMAX < width / 2) {
-					this.rMAX += random(3, 10);
-				}
-
-				// if (this.moving || dist(this.x, this.y, mouseX, mouseY) < this.rMAX / 3) {
-				if (this.moving) {
+				if (this.morphing) {
 					this.zoff += frameRate() / 10000;
 				}
 
@@ -67,16 +206,14 @@
 					0, 0, this.rMAX * 0.1,
 					0, 0, this.rMAX * 0.69
 				);
-
 				gradientFill.addColorStop(0, this.color);
 				gradientFill.addColorStop(1, color(255, 255, 255, 0));
 				drawingContext.fillStyle = gradientFill;
 
 				beginShape();
 				for (let t = 0; t < 360; t++) {
-					let noiseMax = 0.75;
-					let xoff = map(cos(t), -1, 1, 0, noiseMax);
-					let yoff = map(sin(t), -1, 1, 0, noiseMax);
+					let xoff = map(cos(t), -1, 1, 0, this.noiseMax);
+					let yoff = map(sin(t), -1, 1, 0, this.noiseMax);
 					let n = noise(xoff, yoff, this.zoff);
 					let r = map(n, 0, 1, 0, this.rMAX);
 					let x = r * cos(t);
@@ -90,10 +227,10 @@
 
 		class Fish {
 			constructor(segNum, segLength, thickness, taperRate, speedFactor) {
-				this.position = createVector(random(width), random(height));
+				this.position = createVector(width / 2, height / 2);
 				this.velocity = createVector(random(-speedFactor, speedFactor), random(-speedFactor, speedFactor))
 				this.acceleration = createVector();
-				this.maxspeed = speedFactor;
+				this.maxspeed = speedFactor * 1.5;
 				this.maxforce = 0.3;
 
 				this.segNum = segNum;
@@ -104,14 +241,13 @@
 				this.speedFactor = speedFactor;
 				this.x = [];
 				this.y = [];
+
 				for (let i = 0; i < segNum; i++) {
 					this.x[i] = 0;
 					this.y[i] = 0;
 				}
-				const palette = ["#F4B6C4", "#DC7F92", "#6476BD", "#70BCD6", "#D1C2EB", "#fcd34d"];
 
-				this.fishC = random(palette)
-				this.fishC = hexToRgb(this.fishC);
+				this.fishC = random(colorPalette.fish)
 			}
 
 			run(fishes) {
@@ -141,8 +277,9 @@
 				push();
 				translate(x, y);
 				rotate(a);
-				let temp = map(index, 0, this.segNum, 200, 10)
-				stroke(this.fishC[0], this.fishC[1], this.fishC[2], temp);
+				let tempAlpa = map(index, 0, this.segNum, 200, 10);
+				let newColor = color(red(this.fishC), green(this.fishC), blue(this.fishC), tempAlpa);
+				stroke(newColor);
 				strokeWeight(this.thickness * pow(this.taperRate, index));
 				line(0, 0, this.segLength, 0);
 				pop();
@@ -238,7 +375,6 @@
 				}
 
 				if (steer.mag() > 0) {
-					// Implement Reynolds: Steering = Desired - Velocity
 					steer.normalize();
 					steer.mult(this.maxspeed);
 					steer.sub(this.velocity);
@@ -290,94 +426,30 @@
 			}
 		}
 
-		let backgroundBlobs = [];
-		let special = [];
-		let school = [];
-		let canvas;
-
-		function generateBasicBlob(size = 0.1) {
-			let ox = random(width);
-			let oy = random(height);
-			let rMAX = min(width, height) * size * random(2, 5);
-			let color = random(palette);
-			let b = new Blob(ox, oy, rMAX, color);
-			if (random(1) < 0.5) {
-				b.move()
-			}
-			return b;
-		}
-
 		function windowResized() {
 			resizeCanvas(windowWidth, windowHeight);
-		}
 
-		function setup() {
-
-			if (isChromium) {
-				console.log("nah chrome")
-				console.log("exiting")
-				noLoop();
-			} else {
-
-				canvas = createCanvas(windowWidth, windowHeight);
-				canvas.position(0, 0);
-				canvas.style('z-index', '-1');
-
-				angleMode(DEGREES);
-				frameRate(30);
-				for (let i = 0; i < 5; i++) {
-					backgroundBlobs.push(generateBasicBlob(0.5))
-				}
-				for (let i = 0; i < 5; i++) {
-					backgroundBlobs.push(generateBasicBlob())
-				}
-				for (let i = 0; i < 5; i++) {
-					special.push(generateBasicBlob())
-				}
-				special.push(new Blob(width / 2, height / 3, width / 2, palette[1]))
-
-				for (let i = 0; i < map(windowWidth, 0, 1000, 20, 40); i++) {
-					school.push(birthFish(random(width), random(height)));
-				}
+			// lerp all the blobs to their new spots
+			for (let b of backgroundLayer) {
+				let newX = map(b.x, 0, oldWidth, 0, windowWidth)
+				let newY = map(b.y, 0, oldHeight, 0, windowHeight)
+				b.lerpTo(newX, newY);
 			}
-		}
-
-		function hexToRgb(hex) {
-			// Remove the '#' symbol if present
-			hex = hex.replace('#', '');
-
-			// Extract the red (R), green (G), and blue (B) components
-			const r = parseInt(hex.substring(0, 2), 16);
-			const g = parseInt(hex.substring(2, 4), 16);
-			const b = parseInt(hex.substring(4, 6), 16);
-
-			// Return an array with the RGB values
-			return [r, g, b];
-		}
-
-		function draw() {
-			background("#fff");
-			drawingContext.filter = 'blur(3px)';
-			for (let b of backgroundBlobs) {
-				b.display()
+			for (let b of middelLayer) {
+				let newX = map(b.x, 0, oldWidth, 0, windowWidth)
+				let newY = map(b.y, 0, oldHeight, 0, windowHeight)
+				b.lerpTo(newX, newY);
 			}
-			for (let f of school) {
-				f.run(school);
+			for (let b of topLayer) {
+				let newX = map(b.x, 0, oldWidth, 0, windowWidth)
+				let newY = map(b.y, 0, oldHeight, 0, windowHeight)
+				b.lerpTo(newX, newY);
 			}
-			for (let b of special) {
-				b.display()
-			}
+
+			oldWidth = windowWidth;
+			oldHeight = windowHeight;
 		}
 
-		function birthFish() {
-			let numberOfSegments = floor(random(40, 70)); // More reasonable segment range
-			let segmentLength = 3; // Longer segments for more realistic fish
-			let segmentSpeed = random(4, 6); // Slower fish for more natural movement
-			let thickness = random(10, 20); // Adjust thickness for variety
-			let taperRate = random(0.96, 0.99); // Varied taper rate for different fish shapes
-			let newFish = new Fish(numberOfSegments, segmentLength, thickness, taperRate, segmentSpeed);
-			return newFish;
-		}
 	</script>
 </body>
 
