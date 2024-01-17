@@ -8,7 +8,7 @@
     <LargeWrapper title="Projects">
         <div class="px-4 py-2">
             <Section title="Websites">
-                <div class="flex gap-2 my-2">
+                <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
                     <div
                         class="text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
                     >
@@ -46,7 +46,7 @@
             </Section>
 
             <Section title="Simulations">
-                <div class=" flex gap-2 my-2">
+                <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
                     <div
                         class="text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
                     >
@@ -81,7 +81,7 @@
             </Section>
 
             <Section title="other">
-                <div class=" flex gap-2 my-2">
+                <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
                     <div
                         class="w-3/4 text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
                     >
