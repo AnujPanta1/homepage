@@ -124,7 +124,7 @@
 		}
 
 		function draw() {
-			background("#fff");
+			background(255);
 			drawingContext.filter = 'blur(3px)';
 			for (let b of backgroundLayer) {
 				b.display()
@@ -164,8 +164,9 @@
 				this.noiseMax = random(0.7, 0.9);
 				// states
 				if (random(1) < 0.5)
+					this.morphing = true;
+				else
 					this.morphing = false;
-
 				this.traveling = false;
 				this.target = createVector();
 			}

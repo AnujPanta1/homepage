@@ -4,7 +4,7 @@
 </script>
 
 <div in:fly={{ y: 50, duration: 500, delay: 500 }} class="h-0 m-0">
-    <LargeWrapper title="Resume">
+    <LargeWrapper title="Resume" color="text-green-600">
         <iframe
             src="anujpantaresume.pdf"
             title="Resume"

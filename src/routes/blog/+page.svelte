@@ -5,14 +5,14 @@
 </script>
 
 <div in:fly={{ y: 50, duration: 500, delay: 500 }} class="h-0 m-0">
-    <LargeWrapper title="Blog">
+    <LargeWrapper title="Blog" color="text-purple-600">
         <div class="px-4 py-2">
             <Section title="01/03/2024">
                 <div>
                     <div
                         class="text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
                     >
-                        <p class="text-blue-600 font-semibold">
+                        <p class="text-purple-600 font-semibold">
                             Simple WebDevelopment is King
                         </p>
                         <p class="text-gray-600 my-2">
