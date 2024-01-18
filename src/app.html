@@ -99,7 +99,7 @@
 				}
 
 				// add to school B - smaller
-				for (let i = 0; i < map(min(windowWidth, windowHeight), 0, 1200, 5, 25); i++) {
+				for (let i = 0; i < map(min(windowWidth, windowHeight), 0, 1200, 5, 10); i++) {
 					schoolB.push(birthFish(random(width), random(height)));
 				}
 
@@ -109,7 +109,7 @@
 				}
 
 				// add to school A - larger
-				for (let i = 0; i < map(min(windowWidth, windowHeight), 0, 1200, 10, 60); i++) {
+				for (let i = 0; i < map(min(windowWidth, windowHeight), 400, 1200, 30, 100); i++) {
 					schoolA.push(birthFish(random(width), random(height)));
 				}
 
@@ -133,27 +133,13 @@
 				b.display()
 			}
 			for (let f of schoolB) {
-				// if (mouseIsPressed) {
-				// 	f.fastTravelTo(mouseX, mouseY)
-				// 	f.update();
-				// 	f.borders();
-				// 	f.updateSegment(f.position.x, f.position.y);
-				// } else {
 				f.run(schoolB);
-				// }
 			}
 			for (let b of middelLayer) {
 				b.display()
 			}
 			for (let f of schoolA) {
-				// if (mouseIsPressed) {
-				// 	f.fastTravelTo(mouseX, mouseY)
-				// 	f.update();
-				// 	f.borders();
-				// 	f.updateSegment(f.position.x, f.position.y);
-				// } else {
 				f.run(schoolB);
-				// }
 			}
 			for (let b of topLayer) {
 				b.display()
@@ -249,7 +235,7 @@
 				this.velocity = createVector(random(-speedFactor, speedFactor), random(-speedFactor, speedFactor))
 				this.acceleration = createVector();
 				this.maxspeed = speedFactor * 1.5;
-				this.maxforce = 0.3;
+				this.maxforce = 0.4;
 
 				this.segNum = segNum;
 				this.segLength = segLength;
