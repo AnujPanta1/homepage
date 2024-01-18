@@ -2,193 +2,71 @@
     import { fly } from "svelte/transition";
     import LargeWrapper from "$lib/components/LargeWrapper.svelte";
     import Section from "$lib/components/Section.svelte";
+    import InfoCard from "$lib/components/ProjectSection/ProjectInfoSection.svelte";
 </script>
 
 <div in:fly={{ y: 50, duration: 500, delay: 500 }} class="h-0 m-0">
     <LargeWrapper title="Projects" color="text-blue-600">
         <div class="px-4 py-2">
             <Section title="Websites">
-                <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
-                    <div
-                        class="hover:bg-stone-200/80 text-left py-3 px-5 rounded-lg duration-300 text-sm"
-                    >
-                        <div class="">
-                            <p class="text-blue-600 font-semibold sm:mx-auto">
-                                Youtube Ripper
-                            </p>
-                            <div
-                                class=" duration-100 my-0.5 px-3 py-1 rounded-lg flex gap-2 hover:bg-stone/80 mx-auto"
-                            >
-                                <a
-                                    href="/"
-                                    class=" duration-100 text-black hover:text-blue-600/80"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-external-link"
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"
-                                        />
-                                        <path
-                                            d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
-                                        />
-                                        <path d="M11 13l9 -9" />
-                                        <path d="M15 4h5v5" />
-                                    </svg>
-                                </a>
-
-                                <a
-                                    href="/"
-                                    class=" duration-100 text-black hover:text-blue-600/80"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-brand-github"
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"
-                                        />
-                                        <path
-                                            d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
-                                        />
-                                    </svg>
-                                </a>
-                                <a
-                                    href="/"
-                                    class=" duration-100 text-black hover:text-blue-600/80"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-info-circle"
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"
-                                        />
-                                        <path
-                                            d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"
-                                        />
-                                        <path d="M12 9h.01" />
-                                        <path d="M11 12h1v4h1" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 my-2">
-                            I believe media should be free, and mp3 are alwyas
-                            fun to have ! You can search any youtube video and
-                            download a mp3 file.
-                        </p>
-                    </div>
-                    <div
-                        class="text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
-                    >
-                        <p class="text-blue-600 font-semibold">Daily Poll</p>
-                        <p class="text-gray-600 my-2">
-                            This was a website where I used Firebase and React
-                            to create a simple site where users can answer a
-                            daily poll, and submit their own questions.
-                        </p>
-                    </div>
-                    <div
-                        class="text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
-                    >
-                        <p class="text-blue-600 font-semibold">Quack Quack</p>
-                        <p class="text-gray-600 my-2">
-                            This was a bug tracking service that I created with
-                            Subapase React and MaterialUI. It was a great
-                            practice in working on service based full stack
-                            project.
-                        </p>
-                    </div>
+                <div class="flex-col md:flex md:flex-row gap-2 my-2">
+                    <InfoCard
+                        title="Youtube Ripper"
+                        mainText="I believe media should be free, and mp3 are alwyas fun to have ! You can search any youtube video and download a mp3 file."
+                        githubLink="https://github.com/AnujPanta1/youtubeRipperv2"
+                        projectLink="/"
+                        tags={["SvelteKit", "Tailwindcss", "Express", "FFMPEG"]}
+                    ></InfoCard>
+                    <InfoCard
+                        title="Daily Poll"
+                        mainText="This was a website where I used Firebase and React to create a simple site where users can answer a daily poll, and submit their own questions."
+                        githubLink="/"
+                        projectLink="/"
+                        tags={["React", "Framer Motion", "Express", "Firebase"]}
+                    ></InfoCard>
+                    <InfoCard
+                        title="Quack Quack"
+                        mainText="This was a bug tracking service that I created with Subapase React and MaterialUI. It was a great practice in working on service based full stack project."
+                        githubLink="/"
+                        projectLink="/"
+                        tags={["React", "Material UI", "Express", "Firebase"]}
+                    ></InfoCard>
                 </div>
             </Section>
 
             <Section title="Simulations">
                 <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
-                    <div
-                        class="text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
-                    >
-                        <p class="text-blue-600 font-semibold">Friendly Fish</p>
-                        <p class="text-gray-600 my-2">
-                            For my Planetary Simulations class I created a final
-                            project combining multiple simulation methods to
-                            create what I called "Friendly Fish" ! Utilizing
-                            inverse kenematics, flocking algorithims, and perlin
-                            noise fields I was able to create a beautiful
-                            animation of fish. I used parts of that projects for
-                            this websites background as well.
-                        </p>
-                    </div>
-
-                    <div
-                        class="text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
-                    >
-                        <p class="text-blue-600 font-semibold">
-                            Physarum Slime
-                        </p>
-                        <p class="text-gray-600 my-2">
-                            After reading a paper on Physarum slime written by
-                            Jeff Jones I decided to make a moving Agent
-                            simulation drawing on characteristics as written in
-                            the paper. The Agents move fully autonomously, like
-                            Physarum, around their environment moving based on
-                            the trail of other Agents.
-                        </p>
-                    </div>
+                    <InfoCard
+                        title="Friendly Fish"
+                        mainText="For my Planetary Simulations class I created a final project combining multiple simulation methods to create what I called 'Friendly Fish' ! Utilizing inverse kenematics, flocking algorithims, and perlin noise fields I was able to create a beautiful animation of fish. I used parts of that projects for this websites background as well."
+                        githubLink="/"
+                        projectLink="/"
+                        tags={[
+                            "p5.js",
+                            "Boid Flocking",
+                            "Inverse Kenimatics",
+                            "Perlin Noise",
+                        ]}
+                    ></InfoCard>
+                    <InfoCard
+                        title="Physarum Slime"
+                        mainText="After reading a paper on Physarum slime written by Jeff Jones I decided to make a moving Agent simulation drawing on characteristics as written in the paper. The Agents move fully autonomously, like Physarum, around their environment moving based on the trail of other Agents."
+                        githubLink="/"
+                        projectLink="/"
+                        tags={["Processing", "Natural Simulations"]}
+                    ></InfoCard>
                 </div>
             </Section>
 
             <Section title="other">
                 <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
-                    <div
-                        class="w-3/4 text-left py-3 px-5 rounded-lg hover:bg-stone-200/80 duration-300 text-sm"
-                    >
-                        <p class="text-blue-600 font-semibold">
-                            The Sad Thumb of the Short Man
-                        </p>
-                        <p class="text-gray-600 my-2">
-                            As man that looks at himself as a short king, I
-                            decided to see if short men go through stguggles
-                            that can be hilighted with data. I decided to
-                            otulize Python and basic data and ml pattersn to
-                            analyze over 3 men's heights and their thumb size.
-                            After layres of processing, I found shorter men have
-                            small thumbs leading to a hard time buying gloves.
-                            This saddens me, but also maeks my happy that code
-                            can find things. Yay.
-                        </p>
-                    </div>
+                    <InfoCard
+                        title="The Sad Thumb of the Short Man"
+                        mainText="As man that looks at himself as a short king, I decided to see if short men go through stguggles that can be hilighted with data. I decided to otulize Python and basic data and ml pattersn to analyze over 3 men's heights and their thumb size. After layres of processing, I found shorter men have small thumbs leading to a hard time buying gloves. This saddens me, but also maeks my happy that code can find things. Yay."
+                        githubLink="/"
+                        projectLink="/"
+                        tags={["Data Stuff"]}
+                    ></InfoCard>
                 </div>
             </Section>
         </div>
