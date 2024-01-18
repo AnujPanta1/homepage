@@ -133,13 +133,27 @@
 				b.display()
 			}
 			for (let f of schoolB) {
+				// if (mouseIsPressed) {
+				// 	f.fastTravelTo(mouseX, mouseY)
+				// 	f.update();
+				// 	f.borders();
+				// 	f.updateSegment(f.position.x, f.position.y);
+				// } else {
 				f.run(schoolB);
+				// }
 			}
 			for (let b of middelLayer) {
 				b.display()
 			}
 			for (let f of schoolA) {
-				f.run(schoolA);
+				// if (mouseIsPressed) {
+				// 	f.fastTravelTo(mouseX, mouseY)
+				// 	f.update();
+				// 	f.borders();
+				// 	f.updateSegment(f.position.x, f.position.y);
+				// } else {
+				f.run(schoolB);
+				// }
 			}
 			for (let b of topLayer) {
 				b.display()
@@ -254,8 +268,24 @@
 				this.fishC = random(colorPalette.fish)
 			}
 
+			fastTravelTo(seekX, seekY) {
+				let seekPosition = createVector(seekX, seekY);
+				let force = p5.Vector.sub(seekPosition, this.position);
+
+				let distance = force.mag();
+				let strength = map(distance, 0, 100, -0.5, 0.5);
+
+				force.normalize();
+				force.mult(strength);
+				this.applyForce(force);
+			}
+
 			run(fishes) {
-				this.flock(fishes);
+				if (mouseIsPressed) {
+					this.fastTravelTo(mouseX, mouseY);
+				} else {
+					this.flock(fishes);
+				}
 				this.update();
 				this.borders();
 				this.updateSegment(this.position.x, this.position.y);
