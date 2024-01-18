@@ -65,7 +65,7 @@
                         mainText="As man that looks at himself as a short king, I decided to see if short men go through stguggles that can be hilighted with data. I decided to otulize Python and basic data and ml pattersn to analyze over 3 men's heights and their thumb size. After layres of processing, I found shorter men have small thumbs leading to a hard time buying gloves. This saddens me, but also maeks my happy that code can find things. Yay."
                         githubLink="/"
                         projectLink="/"
-                        tags={["Data Stuff"]}
+                        tags={["Data Stuff", "Comedy"]}
                     ></InfoCard>
                 </div>
             </Section>
