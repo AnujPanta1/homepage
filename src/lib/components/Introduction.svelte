@@ -10,7 +10,7 @@
 
     setInterval(() => {
         phraseIndex = phraseIndex + 1 === phrases.length ? 0 : phraseIndex + 1;
-    }, 5000);
+    }, 3300);
 </script>
 
 <p class="text-lg md:text-3xl font-normal">hi, welcome to my site i'm</p>
