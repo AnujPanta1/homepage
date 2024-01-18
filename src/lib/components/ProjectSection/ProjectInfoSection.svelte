@@ -7,18 +7,18 @@
 </script>
 
 <div
-    class="hover:bg-stone-100/80 text-left py-3 px-5 rounded-lg duration-300 text-sm flex-col flex gap-2"
+    class="flex flex-col gap-2 rounded-lg px-5 py-3 text-left text-sm duration-300 hover:bg-stone-100/80"
 >
     <div>
-        <div class="flex justify-between items-center">
-            <p class="text-blue-600 font-semibold">{title}</p>
+        <div class="flex items-center justify-between">
+            <p class="font-semibold text-blue-600">{title}</p>
             <div
-                class=" duration-100 my-0.5 py-1 rounded-lg flex gap-2 hover:bg-stone/80"
+                class=" hover:bg-stone/80 my-0.5 flex gap-2 rounded-lg py-1 duration-100"
             >
                 <a
                     href={projectLink}
                     target="_blank"
-                    class=" duration-100 text-black hover:text-blue-600/80"
+                    class=" text-black duration-100 hover:text-blue-600/80"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@
                 <a
                     href={githubLink}
                     target="_blank"
-                    class=" duration-100 text-black hover:text-blue-600/80"
+                    class=" text-black duration-100 hover:text-blue-600/80"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,7 @@
                 </a>
             </div>
         </div>
-        <p class="text-gray-600 my-2">
+        <p class="my-2 text-gray-600">
             {mainText}
         </p>
     </div>
@@ -74,7 +74,7 @@
     <div class="flex flex-wrap gap-2">
         {#each tags as tag}
             <span
-                class="inline-flex items-center gap-x-1 py-1 px-3 rounded-full text-xs font-medium bg-blue-100/80 text-blue-800/80"
+                class="inline-flex items-center gap-x-1 rounded-full bg-blue-100/80 px-3 py-1 text-xs font-medium text-blue-800/80"
                 >{tag}</span
             >
         {/each}

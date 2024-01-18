@@ -7,9 +7,11 @@
 <div
     in:fly={{ y: 50, duration: 500, delay: 500 }}
     out:fly={{ y: -50, duration: 250 }}
-    class="h-0 m-0"
+    class="m-0 h-0"
 >
-    <div class="text-center mx-auto my-20 md:my-40">
+    <div
+        class="mx-auto my-20 text-center duration-200 ease-in md:my-28 lg:my-36"
+    >
         <Introduction></Introduction>
         <Intros></Intros>
     </div>

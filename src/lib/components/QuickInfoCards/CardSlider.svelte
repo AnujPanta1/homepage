@@ -35,12 +35,14 @@
     }
 </script>
 
-<div class="flex my-10 md:my-24 gap-2 px-4 mx-auto w-fit md:gap-5 h-44">
+<div
+    class="mx-auto my-16 flex h-44 w-fit gap-2 px-4 md:my-24 md:gap-5 lg:my-36"
+>
     <button
         on:click={() => {
             move(-1);
         }}
-        class="md:hover:scale-125 active:scale-90 duration-150 ease-in"
+        class="duration-150 ease-in active:scale-90 md:hover:scale-125"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +83,7 @@
         {/each}
     </div>
     <button
-        class="md:hover:scale-125 active:scale-90 duration-150 ease-in"
+        class="duration-150 ease-in active:scale-90 md:hover:scale-125"
         on:click={() => {
             move(1);
         }}

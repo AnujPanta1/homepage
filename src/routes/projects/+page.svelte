@@ -5,11 +5,11 @@
     import InfoCard from "$lib/components/ProjectSection/ProjectInfoSection.svelte";
 </script>
 
-<div in:fly={{ y: 50, duration: 500, delay: 500 }} class="h-0 m-0">
+<div in:fly={{ y: 50, duration: 500, delay: 500 }} class="m-0 h-0">
     <LargeWrapper title="Projects" color="text-blue-600">
         <div class="px-4 py-2">
             <Section title="Websites">
-                <div class="flex-col md:flex md:flex-row gap-2 my-2">
+                <div class="my-2 flex-col gap-2 md:flex md:flex-row">
                     <InfoCard
                         title="Youtube Ripper"
                         mainText="I believe media should be free, and mp3 are alwyas fun to have ! You can search any youtube video and download a mp3 file."
@@ -35,7 +35,7 @@
             </Section>
 
             <Section title="Simulations">
-                <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
+                <div class="my-2 flex-col gap-2 sm:flex sm:flex-row">
                     <InfoCard
                         title="Friendly Fish"
                         mainText="For my Planetary Simulations class I created a final project combining multiple simulation methods to create what I called 'Friendly Fish' ! Utilizing inverse kenematics, flocking algorithims, and perlin noise fields I was able to create a beautiful animation of fish. I used parts of that projects for this websites background as well."
@@ -59,7 +59,7 @@
             </Section>
 
             <Section title="other">
-                <div class="flex-col sm:flex sm:flex-row gap-2 my-2">
+                <div class="my-2 flex-col gap-2 sm:flex sm:flex-row">
                     <InfoCard
                         title="The Sad Thumb of the Short Man"
                         mainText="As man that looks at himself as a short king, I decided to see if short men go through stguggles that can be hilighted with data. I decided to otulize Python and basic data and ml pattersn to analyze over 3 men's heights and their thumb size. After layres of processing, I found shorter men have small thumbs leading to a hard time buying gloves. This saddens me, but also maeks my happy that code can find things. Yay."
@@ -74,9 +74,9 @@
         <a
             href="https://www.github.com/anujpanta1"
             target="_blank"
-            class="px-4 mb-2 flex w-fit mx-auto gap-3 items-center"
+            class="mx-auto mb-2 flex w-fit items-center gap-3 px-4"
         >
-            <p class="text-sm font-semibold text-gray-600 w-fit">
+            <p class="w-fit text-sm font-semibold text-gray-600">
                 Gheck out my saucy github !
             </p>
             <svg

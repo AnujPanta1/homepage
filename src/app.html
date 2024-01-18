@@ -311,7 +311,7 @@
 				push();
 				translate(x, y);
 				rotate(a);
-				let tempAlpa = map(index, 0, this.segNum, 200, 10);
+				let tempAlpa = map(index, 0, this.segNum, 100, 25);
 				let newColor = color(red(this.fishC), green(this.fishC), blue(this.fishC), tempAlpa);
 				stroke(newColor);
 				strokeWeight(this.thickness * pow(this.taperRate, index));
