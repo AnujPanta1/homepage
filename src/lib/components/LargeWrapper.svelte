@@ -15,7 +15,7 @@
         </p>
         <a
             href={linkLocation}
-            class="p-1.5 rounded-lg bg-stone-200/50 hover:bg-stone-200/80 duration-300 ease-in active:scale-90"
+            class="p-1.5 rounded-lg hover:bg-stone-200/80 duration-300 ease-in active:scale-90"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
