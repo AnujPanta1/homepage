@@ -426,7 +426,9 @@
 		}
 
 		function windowResized() {
-			resizeCanvas(windowWidth, windowHeight);
+			let newWidth = windowWidth;
+			let newHeight = document.documentElement.scrollHeight;
+			resizeCanvas(newWidth, newHeight);
 
 			// lerp all the blobs to their new spots
 			for (let b of backgroundLayer) {
@@ -445,8 +447,8 @@
 				b.lerpTo(newX, newY);
 			}
 
-			oldWidth = windowWidth;
-			oldHeight = windowHeight;
+			oldWidth = newWidth;
+			oldHeight = newHeight;
 		}
 
 	</script>
