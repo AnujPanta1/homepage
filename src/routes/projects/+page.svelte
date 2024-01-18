@@ -15,33 +15,21 @@
                         mainText="I believe media should be free, and mp3 are alwyas fun to have ! You can search any youtube video and download a mp3 file."
                         githubLink="https://github.com/AnujPanta1/youtubeRipperv2"
                         projectLink="/"
-<<<<<<< HEAD
                         tags={["SvelteKit", "Tailwindcss", "Express", "FFMPEG"]}
-=======
-                        tags={["Svelte", "Tailwindcss"]}
->>>>>>> 0fe254a5907d10015354dbc746c2dfc12201b960
                     ></InfoCard>
                     <InfoCard
                         title="Daily Poll"
                         mainText="This was a website where I used Firebase and React to create a simple site where users can answer a daily poll, and submit their own questions."
                         githubLink="/"
                         projectLink="/"
-<<<<<<< HEAD
                         tags={["React", "Framer Motion", "Express", "Firebase"]}
-=======
-                        tags={["React", "Material UI"]}
->>>>>>> 0fe254a5907d10015354dbc746c2dfc12201b960
                     ></InfoCard>
                     <InfoCard
                         title="Quack Quack"
                         mainText="This was a bug tracking service that I created with Subapase React and MaterialUI. It was a great practice in working on service based full stack project."
                         githubLink="/"
                         projectLink="/"
-<<<<<<< HEAD
                         tags={["React", "Material UI", "Express", "Firebase"]}
-=======
-                        tags={["React", "SCSS", "Firebase"]}
->>>>>>> 0fe254a5907d10015354dbc746c2dfc12201b960
                     ></InfoCard>
                 </div>
             </Section>
