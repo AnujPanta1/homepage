@@ -14,21 +14,21 @@
                         title="Youtube Ripper"
                         mainText="I believe media should be free, and mp3 are alwyas fun to have ! You can search any youtube video and download a mp3 file."
                         githubLink="https://github.com/AnujPanta1/youtubeRipperv2"
-                        projectLink="/"
+                        projectLink="https://ourmusicalstorage.vercel.app/"
                         tags={["SvelteKit", "Tailwindcss", "Express", "FFMPEG"]}
                     ></InfoCard>
                     <InfoCard
                         title="Daily Poll"
                         mainText="This was a website where I used Firebase and React to create a simple site where users can answer a daily poll, and submit their own questions."
-                        githubLink="/"
-                        projectLink="/"
+                        githubLink="https://github.com/AnujPanta1/thedailypoll"
+                        projectLink="https://anujpanta1.github.io/thedailypoll/"
                         tags={["React", "Framer Motion", "Express", "Firebase"]}
                     ></InfoCard>
                     <InfoCard
                         title="Quack Quack"
                         mainText="This was a bug tracking service that I created with Subapase React and MaterialUI. It was a great practice in working on service based full stack project."
-                        githubLink="/"
-                        projectLink="/"
+                        githubLink="https://github.com/AnujPanta1/quack-quack"
+                        projectLink="https://anujpanta1.github.io/quack-quack/"
                         tags={["React", "Material UI", "Express", "Firebase"]}
                     ></InfoCard>
                 </div>
